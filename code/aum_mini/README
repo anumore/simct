@@ -1,0 +1,12 @@
+##Requires: gsl libraries (>1.14) include files in CPPFLAGS or default include
+##location. Also gsl and gslcblas libraries in LDFLAGS or default library location.
+##
+##For example: If gsl is installed in the location denoted by variable GSL_LOC,
+##then run the install.sh as follows:
+##CPPFLAGS=-I$GSL_LOC/include LDFLAGS=-L$GSL_LOC/lib ./install.sh
+
+## If gsl is in one of the default locations, run as follows
+# ./install.sh
+
+##Clean previous installation:
+# rm -rf build cosmic configfile src/cosmology_wrap.cpp src/cosmology.py

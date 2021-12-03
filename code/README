@@ -1,0 +1,101 @@
+###############################################
+## IMPORTANT NOTE: 
+## In spite of the custom "input*.py" file, this code has several parameters specific to
+## CFHTLS and is attuned to generate a specific set of simulated lens images.
+## Please read More et al. XXXXXXXXX to understand these important parameters and what this
+## code produces.
+
+## Parameters will have to be changed throughout the code to serve your specific
+## purpose or when working with a different survey. 
+###############################################
+
+###############################################
+## SOFTWARES NEEDED:
+###############################################
+## Python 2.7
+
+## Keeton's GRAVLENS ray-tracing code:
+## http://redfive.rutgers.edu/~keeton/gravlens/Working/index.html 
+
+## Marshall et al.'s HumVI code to make color composites:
+## https://github.com/drphilmarshall/HumVI
+
+###############################################
+## DIRECTORIES:
+###############################################
+## aum_mini: Library used for calculating halo mass function and cosmological
+## quantities such as distances 
+
+## catalogs: Input catalogs of foreground lenses and background sources
+
+## clus_lens: Simulate cluster-scale lenses using SIE(BCG)+SIS(members)+NFW(halo) 
+## lens model with galaxies as the background population
+
+## gal_lens: Simulate galaxy-scale lenses using SIE+shear lens model with either
+## quasars or galaxies as the background population
+
+## final_images: Create cutouts of real images from larger parent tiles and
+## merge simulated lens images to the real image cutouts in each filter and then
+## create color composite
+
+###############################################
+## CATALOGS:
+###############################################
+## Foreground population:
+#########################
+## inp_cls_frg_cat_w?.txt: Cluster catalogs for w1,w2,w3 and w4 (the four CFHTLS
+## fields) 
+
+## inp_gal_frg_cat_w?.txt: Galaxy catalogs for w1,w2,w3 and w4 (the four CFHTLS 
+## fields)
+
+## Background population:
+#########################
+## inp_gal_bkg_cat.txt: Background galaxy catalog for CFHTLS
+
+## inp_qso_bkg_cat.txt: Background quasar catalog for CFHTLS using SDSS qso
+## catalog
+
+
+###############################################
+## CATALOG COLUMN DESCRIPTION:
+###############################################
+## Units: positions are in deg, mags are in AB, Position angle is East(90deg) of North (0deg)
+## The columns given below in CAPS are essential for the code to work, others are extra columns not used in the code.
+
+## Foreground population:
+#########################
+## This is a combined catalog of photometry and galaxy shape made from
+## sextractor. 
+
+## galaxy:
+## TILE_NO. RA DEC TILE_ID GALAXY_ID Z_REDSHIFT z_low z_high
+## U_MAG G_MAG R_MAG I_MAG Y_MAG Z_MAG u_mag_err g_mag_err r_mag_err i_mag_err y_mag_err z_mag_err
+## ra_1 dec_1 THETA_J2000 errtheta_j2000 A_IMAGE B_IMAGE erra_image errb_image
+## flags  class_star  mag_auto 
+
+## cluster: same columns as galaxy catalog + one last column which identifies
+## each cluster uniquely i.e. each BCG and member will have the same ID
+## CLUS_ID 
+
+## Background population:
+#########################
+## quasar: object_id RA DEC Z_REDSHIFT Z_ERR U_MAG G_MAG R_MAG I_MAG Z_MAG 
+## galaxy: object_id RA DEC class_star fitclass Z_REDSHIFT Z_LOW Z_HIGH U_MAG G_MAG R_MAG I_MAG Z_MAG 
+
+
+###############################################
+## IMPORTANT FILES
+###############################################
+## input_*.py: Primary custom settings can be made in this file 
+## run.sh: The complete code can be executed by running this shell script
+
+
+###############################################
+## AUTHORS
+###############################################
+## Anupreeta More (Kavli IPMU)
+## Surhud More (Kavli IPMU)
+## Phil Marshall (KIPAC)
+
+## For any questions/clarifications, please contact anupreeta.more@gmail.com
