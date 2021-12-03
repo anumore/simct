@@ -2,7 +2,7 @@
 ## IMPORTANT NOTE: 
 ## In spite of the custom "input*.py" file, this code has several parameters specific to
 ## CFHTLS and is attuned to generate a specific set of simulated lens images.
-## Please read More et al. XXXXXXXXX to understand these important parameters and what this
+## Please read More et al. 2016 (https://arxiv.org/abs/1504.05587) to understand these important parameters and what this
 ## code produces.
 
 ## Parameters will have to be changed throughout the code to serve your specific
