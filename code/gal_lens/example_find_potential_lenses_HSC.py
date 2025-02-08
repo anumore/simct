@@ -11,9 +11,9 @@ from astropy.cosmology import FlatLambdaCDM
 cosmo = FlatLambdaCDM(H0=72,Om0=0.26)
 constants = {'G':4.2994e-9, 'light_speed':299792.458}  # in km^3 Msun^(-1) year^(-2) and km/s respectively
 
-bkggalcatalog    = "hsc_UDEEP_cosmos_bkggal_mod.csv" 
+bkggalcatalog    = "../catalogs/hsc_UDEEP_cosmos_bkggal_mod.csv" 
 
-lenscatalog = 'hsc_udeep_frggal_mod.csv'
+lenscatalog = '../catalogs/hsc_udeep_frggal_mod.csv'
 data = Table.read(lenscatalog,format='csv')
 zlens,gg,gr,gi,gz,gy= data['photoz_median'],data['gmag'],data['rmag'],data['imag'],data['zmag'],data['ymag']
 gerr,rerr,ierr,zerr,yerr= data['gmag_err'],data['rmag_err'],data['imag_err'],data['zmag_err'],data['ymag_err']
