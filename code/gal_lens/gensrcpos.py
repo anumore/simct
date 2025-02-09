@@ -214,11 +214,23 @@ def srcposrng(reinst,ell,ell_pa,sh_str,sh_pa,glno,flag,gid,lenscode):
     return srcx,srcy,smag,summ,imno
 
 
-## Calculate size of the source assuming size-luminosity relation
-## using Bernardi et al. 2003 Eqns given in Oguri 2006
+
 def srcsize(mapp,zsrc,pixsc,cosmo):
-    ## mapp is in g-band
-    Dlum=cosmo.luminosity_distance(zsrc).value  #cc.Dlofz(zsrc)/p.hval
+    '''
+    Calculate size of the source assuming size-luminosity relation
+    using Bernardi et al. 2003 Eqns, given in Oguri 2006
+
+    .. [1] Oguri and Marshal (2010), astro-ph/1001.2037, doi: 10.1111/j.1365-2966.2010.16639.x
+
+    
+    params:
+    mapp: apparent g-mag of the source.
+    zsrc: redshift of the source
+    pixsc: pixel scale of the CCD
+    cosmo: cosmology used
+    '''
+
+    Dlum=cosmo.luminosity_distance(zsrc).value
     Mabs =mapp-5*log10(Dlum)-25
     Lum_src=10**(-0.4*(Mabs-5.48))
     Da=cosmo.angular_diameter_distance(zsrc).value*1.0e3 #cc.Daofz(zsrc)/p.hval*1.e3 ## Da is in kpc
@@ -226,6 +238,5 @@ def srcsize(mapp,zsrc,pixsc,cosmo):
     Lrat= Lum_src/10**10.2
     Reff= 10**0.52*Lrat**(2./3.) * 1./(1+zsrc)**2
     ## Half-light radius converting from kpc->radian->arcsec->pix
-    #print('Inputs for srcsize: ',mapp,zsrc,pixsc)
-    #print('Output: ',(Reff/Da)*(180.*3600/pi/pixsc))
+
     return (Reff/Da)*(180.*3600/pi/pixsc)

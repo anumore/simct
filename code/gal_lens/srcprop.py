@@ -477,6 +477,9 @@ def initPhigal(mlim, kwargs_source):
 def dnsbydm(mag):
     """Calculates the galaxy number density per unit magnitude.
 
+    References:
+    [1] Faure et a;., (2009), astro-ph/0810.4838, doi: 10.1088/0004-637X/695/2/1233
+   
     Parameters:
     - mag: Magnitude value for which the number density is computed.
       type: float
@@ -571,7 +574,7 @@ def findzgal(ztry, vdisp, zred, q, Ntarget, kwargs_source, cosmo, constants):
     """Find the redshift at which the integrated galaxy number density equals Ntarget.
 
     Parameters:
-    - ztry: The trial redshift at which to evaluate the condition. #NOTE: confirm
+    - ztry: The trial redshift at which to evaluate the condition.
         type: float
     - vdisp: The velocity dispersion of the galaxies.
         type: float
@@ -587,14 +590,9 @@ def findzgal(ztry, vdisp, zred, q, Ntarget, kwargs_source, cosmo, constants):
     - constants: A dictionary of physical constants needed for calculations.
 
     Returns:
-    - The difference between the target number density and the integrated number density up to ztry. #NOTE: confirm
+    - The difference between the target number density and the integrated number density up to ztry.
     """
-    #print('findzgal output: ',Ntarget
-    #    - sci.quad(
-    #        lambda zz: dNbydz_gal(zz, vdisp, zred, q, kwargs_source, cosmo, constants),
-    #        kwargs_source.get("min_z"),
-    #        ztry,
-    #    )[0])
+
     return (
         Ntarget
         - sci.quad(
@@ -637,7 +635,7 @@ def findmaggal(magtry, zsrc, Phitarget):
 
 def Nsrc_gal(magg, magr, magi, zred, q, vdisp, myseed, kwargs_source, cosmo, constants):
     """Calculate the number of background galaxies that could be lensed by a foreground
-    galaxy and determine their properties.
+    galaxy and determine their properties, see More et al 2016, equation 1 for details
 
     Parameters:
     - magg: The galaxy's g-band magnitude.
@@ -676,6 +674,7 @@ def Nsrc_gal(magg, magr, magi, zred, q, vdisp, myseed, kwargs_source, cosmo, con
         return 0, listmag, listz, rands
 
     ## Initialize ns(mlim) if not done before
+    # Check equation 1 from More et al 2016
     if init_nsmlim_gal == 0:
         initnsmlim(kwargs_source)
 
@@ -693,9 +692,7 @@ def Nsrc_gal(magg, magr, magi, zred, q, vdisp, myseed, kwargs_source, cosmo, con
     )
 
     ## Return a Poisson deviate
-    # np.random.seed(myseed)        Comment number 1
     Nreal = np.random.poisson(Nsrcmean_boost)
-    #print('Nsrc mean bost real: ',Nsrcmean,Nsrcmean_boost,Nreal)
     #print("This lens has %f galaxies behind it on average and Poisson deviate is %d\n"%(Nsrcmean_boost,Nreal))
     fp1.write(
         "This lens has %f galaxies behind it on average and Poisson deviate is %d\n"
@@ -711,7 +708,6 @@ def Nsrc_gal(magg, magr, magi, zred, q, vdisp, myseed, kwargs_source, cosmo, con
             rr = np.random.random()
             Ntarg = rr * Nsrcmean
 
-            #print('vdisp, zred, q, Ntarg ',vdisp, zred, q, Ntarg)
             # Find the redshift of the background galaxy
             galzsrc = brentq(
                 findzgal,
@@ -720,7 +716,6 @@ def Nsrc_gal(magg, magr, magi, zred, q, vdisp, myseed, kwargs_source, cosmo, con
                 args=(vdisp, zred, q, Ntarg, kwargs_source, cosmo, constants),
                 xtol=1.0e-3,
             )
-            #print('galzsrc: ',galzsrc)
 
         rands = np.append(rands, rr)
         listz = np.append(listz, galzsrc)
@@ -728,8 +723,6 @@ def Nsrc_gal(magg, magr, magi, zred, q, vdisp, myseed, kwargs_source, cosmo, con
 
         while not done:
             try:
-                #print('Not done')
-                #np.random.seed(myseed)     Comment number 3
                 rr = np.random.random()
                 Phitarg = (
                     rr
