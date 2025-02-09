@@ -233,7 +233,7 @@ def srcsize(mapp,zsrc,pixsc,cosmo):
     Dlum=cosmo.luminosity_distance(zsrc).value
     Mabs =mapp-5*log10(Dlum)-25
     Lum_src=10**(-0.4*(Mabs-5.48))
-    Da=cosmo.angular_diameter_distance(zsrc).value*1.0e3 #cc.Daofz(zsrc)/p.hval*1.e3 ## Da is in kpc
+    Da=cosmo.angular_diameter_distance(zsrc).value*1.0e3 # Da is in kpc
 
     Lrat= Lum_src/10**10.2
     Reff= 10**0.52*Lrat**(2./3.) * 1./(1+zsrc)**2
