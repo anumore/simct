@@ -443,6 +443,8 @@ def Nqso(kwargs_source, constants, cosmo):
 def initPhigal(mlim, kwargs_source):
     """Initialize the galaxy luminosity function per unit comoving volume.
 
+    .. [1] Faure et a;., (2009), astro-ph/0810.4838, doi: 10.1088/0004-637X/695/2/1233
+    
     Parameters:
     - mlim: Magnitude limit used to compute the characteristic redshift.
     - kwargs_source: Dictionary containing the source parameters.
@@ -605,7 +607,6 @@ def findzgal(ztry, vdisp, zred, q, Ntarget, kwargs_source, cosmo, constants):
 
 def findmaggal(magtry, zsrc, Phitarget):
     """
-    NOTE: confirm these comments
     Compute the difference between the target galaxy number density and the modeled number density
     for a given trial magnitude.
 
